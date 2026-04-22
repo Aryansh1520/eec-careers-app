@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "minimal",
+    "name": "Eagle Eye Careers",
     "slug": "minimal",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -16,13 +16,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.tattvanyx.eagleeye"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.tattvanyx.eagleeye"
     },
     "web": {
       "bundler": "metro",

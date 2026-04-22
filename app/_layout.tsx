@@ -1,3 +1,4 @@
+
 import '@/global.css';
 
 import { NAV_THEME } from '@/lib/theme';
@@ -5,21 +6,28 @@ import { ThemeProvider } from '@react-navigation/native';
 import { PortalHost } from '@rn-primitives/portal';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useUniwind } from 'uniwind';
+import { usePersistentTheme } from '@/lib/theme-store';
 
 export {
-  // Catch any errors thrown by the Layout component.
   ErrorBoundary,
 } from 'expo-router';
 
 export default function RootLayout() {
-  const { theme } = useUniwind();
+  const { theme, isReady } = usePersistentTheme();
+
+  // Always have a safe fallback
+  const currentTheme = theme ?? 'light';
 
   return (
-    <ThemeProvider value={NAV_THEME[theme ?? 'light']}>
-      <StatusBar style={theme === 'dark' ? 'light' : 'dark'} />
-      <Stack />
+    <ThemeProvider value={NAV_THEME[currentTheme]}>
+      <StatusBar style={currentTheme === 'dark' ? 'light' : 'dark'} />
+
+      {/* App navigation */}
+      <Stack screenOptions={{ headerShown: false }} />
+
+      {/* Portal (modals, sheets, etc.) */}
       <PortalHost />
     </ThemeProvider>
   );
 }
+
