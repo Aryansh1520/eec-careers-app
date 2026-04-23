@@ -23,7 +23,7 @@ export function VerifyEmailForm() {
   const router = useRouter();
 
   function onSubmit() {
-    router.replace('/dashboard');
+    router.replace({ pathname: '/onboarding', params: { mode: 'new' } });
   }
 
   return (
