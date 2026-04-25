@@ -1,14 +1,16 @@
-import { Text } from '@/components/ui/text';
+import { JobsPage } from '@/components/jobs/JobsPage';
 import React from 'react';
-import { View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { View, Text, Platform } from 'react-native';
+import TopBar from '@/components/TopBar'
+
 
 export default function JobsScreen() {
   return (
-    <View className="flex-1 bg-background items-center justify-center gap-6 p-4">
-      <Text className="text-3xl font-bold">Jobs</Text>
-      <Text className="text-muted-foreground text-center">
-        Browse and discover careers directly tailored to your profile.
-      </Text>
-    </View>
+    <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']}>
+      <TopBar title="Jobs" />
+      <JobsPage />
+    </SafeAreaView>
   );
 }

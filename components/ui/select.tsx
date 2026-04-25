@@ -7,9 +7,9 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Text } from '@/components/ui/text';
-import { ChevronDown } from 'lucide-react-native';
+import { ChevronDown, Check } from 'lucide-react-native';
 import * as React from 'react';
-import { Platform, Pressable, ScrollView, View } from 'react-native';
+import { Modal, Platform, Pressable, ScrollView, View } from 'react-native';
 
 /* ─── Types ─── */
 type Option = { value: string; label: string };
@@ -57,42 +57,67 @@ const SelectContext = React.createContext<{
 function Select({ value, onValueChange, children }: SelectProps) {
   const [open, setOpen] = React.useState(false);
 
+  if (Platform.OS === 'web') {
+    // Web: use Dropdown Menu for proper positioning
+    return (
+      <SelectContext.Provider value={{ value, onValueChange, open, setOpen }}>
+        <DropdownMenu open={open} onOpenChange={setOpen}>
+          {children}
+        </DropdownMenu>
+      </SelectContext.Provider>
+    );
+  }
+
+  // Native (Android/iOS): use a simple context provider
   return (
     <SelectContext.Provider value={{ value, onValueChange, open, setOpen }}>
-      <DropdownMenu open={open} onOpenChange={setOpen}>
-        {children}
-      </DropdownMenu>
+      {children}
     </SelectContext.Provider>
   );
 }
 
 /* ─── Trigger ─── */
 function SelectTrigger({ className, children }: SelectTriggerProps) {
-  return (
-    <DropdownMenuTrigger asChild>
-      <Pressable
-        className={cn(
-          'border-input bg-background dark:bg-input/30 flex h-10 w-full flex-row items-center justify-between rounded-md border px-3 py-2 shadow-sm shadow-black/5 sm:h-9',
-          Platform.select({
-            web: cn(
-              'outline-none transition-[color,box-shadow] md:text-sm',
-              'focus:border-ring focus:ring-ring/50 focus:ring-[3px]',
-              'disabled:cursor-not-allowed disabled:opacity-50'
-            ),
-          }),
-          className
-        )}>
-        <View className="flex-1 flex-row items-center">
-          {children}
-        </View>
-        <Icon
-          as={ChevronDown}
-          size={16}
-          className="text-muted-foreground ml-2 shrink-0"
-        />
-      </Pressable>
-    </DropdownMenuTrigger>
+  const { setOpen } = React.useContext(SelectContext);
+
+  const triggerContent = (
+    <Pressable
+      onPress={() => {
+        if (Platform.OS !== 'web') {
+          setOpen(true);
+        }
+      }}
+      className={cn(
+        'border-input bg-background dark:bg-input/30 flex h-10 w-full flex-row items-center justify-between rounded-md border px-3 py-2 shadow-sm shadow-black/5 sm:h-9',
+        Platform.select({
+          web: cn(
+            'outline-none transition-[color,box-shadow] md:text-sm',
+            'focus:border-ring focus:ring-ring/50 focus:ring-[3px]',
+            'disabled:cursor-not-allowed disabled:opacity-50'
+          ),
+        }),
+        className
+      )}>
+      <View className="flex-1 flex-row items-center">
+        {children}
+      </View>
+      <Icon
+        as={ChevronDown}
+        size={16}
+        className="text-muted-foreground ml-2 shrink-0"
+      />
+    </Pressable>
   );
+
+  if (Platform.OS === 'web') {
+    return (
+      <DropdownMenuTrigger asChild>
+        {triggerContent}
+      </DropdownMenuTrigger>
+    );
+  }
+
+  return triggerContent;
 }
 
 /* ─── Value ─── */
@@ -114,17 +139,56 @@ function SelectValue({ className, placeholder }: SelectValueProps) {
 
 /* ─── Content ─── */
 function SelectContent({ className, children }: SelectContentProps) {
+  const { open, setOpen } = React.useContext(SelectContext);
+
+  if (Platform.OS === 'web') {
+    return (
+      <DropdownMenuContent
+        className={cn('min-w-[200px] max-h-72', className)}>
+        <ScrollView
+          style={{ maxHeight: 280 }}
+          showsVerticalScrollIndicator={true}
+          bounces={false}
+          nestedScrollEnabled>
+          {children}
+        </ScrollView>
+      </DropdownMenuContent>
+    );
+  }
+
+  // Native: Modal-based bottom sheet
   return (
-    <DropdownMenuContent
-      className={cn('min-w-[200px] max-h-72', className)}>
-      <ScrollView
-        style={{ maxHeight: 280 }}
-        showsVerticalScrollIndicator={true}
-        bounces={false}
-        nestedScrollEnabled>
-        {children}
-      </ScrollView>
-    </DropdownMenuContent>
+    <Modal
+      visible={open}
+      transparent
+      animationType="fade"
+      onRequestClose={() => setOpen(false)}
+      statusBarTranslucent
+    >
+      <Pressable
+        onPress={() => setOpen(false)}
+        className="flex-1 justify-end bg-black/40"
+      >
+        <Pressable
+          onPress={(e) => e.stopPropagation?.()}
+          className={cn(
+            'bg-popover mx-4 mb-8 max-h-80 overflow-hidden rounded-xl border border-border shadow-lg shadow-black/10',
+            className
+          )}
+        >
+          <ScrollView
+            style={{ maxHeight: 300 }}
+            showsVerticalScrollIndicator
+            bounces={false}
+            nestedScrollEnabled
+          >
+            <View className="py-1">
+              {children}
+            </View>
+          </ScrollView>
+        </Pressable>
+      </Pressable>
+    </Modal>
   );
 }
 
@@ -133,16 +197,40 @@ function SelectItem({ value, label, className, children }: SelectItemProps) {
   const ctx = React.useContext(SelectContext);
   const isSelected = ctx.value?.value === value;
 
+  const handlePress = () => {
+    ctx.onValueChange?.({ value, label });
+    ctx.setOpen(false);
+  };
+
+  if (Platform.OS === 'web') {
+    return (
+      <DropdownMenuItem
+        className={cn(
+          isSelected && 'bg-accent',
+          className
+        )}
+        onPress={handlePress}>
+        <Text
+          className={cn(
+            'text-popover-foreground text-sm',
+            isSelected && 'font-semibold'
+          )}>
+          {children ?? label}
+        </Text>
+      </DropdownMenuItem>
+    );
+  }
+
+  // Native: simple Pressable row
   return (
-    <DropdownMenuItem
+    <Pressable
+      onPress={handlePress}
       className={cn(
+        'flex-row items-center justify-between px-4 py-3 active:bg-accent',
         isSelected && 'bg-accent',
         className
       )}
-      onPress={() => {
-        ctx.onValueChange?.({ value, label });
-        ctx.setOpen(false);
-      }}>
+    >
       <Text
         className={cn(
           'text-popover-foreground text-sm',
@@ -150,7 +238,10 @@ function SelectItem({ value, label, className, children }: SelectItemProps) {
         )}>
         {children ?? label}
       </Text>
-    </DropdownMenuItem>
+      {isSelected && (
+        <Icon as={Check} className="text-primary size-4" />
+      )}
+    </Pressable>
   );
 }
 
