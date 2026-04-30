@@ -1,14 +1,14 @@
-import { Text } from '@/components/ui/text';
+import { ApplicationsPage } from '@/components/applications/ApplicationsPage';
 import React from 'react';
-import { View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import TopBar from '@/components/TopBar';
+import { Platform } from 'react-native';
 
 export default function ApplicationsScreen() {
   return (
-    <View className="flex-1 bg-background items-center justify-center gap-6 p-4">
-      <Text className="text-3xl font-bold">Applications</Text>
-      <Text className="text-muted-foreground text-center">
-        Track your applied jobs and interview status.
-      </Text>
-    </View>
+    <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']}>
+      <TopBar title="Applications" showBack={Platform.OS !== 'web'} />
+      <ApplicationsPage />
+    </SafeAreaView>
   );
 }
