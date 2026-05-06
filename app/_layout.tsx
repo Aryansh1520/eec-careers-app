@@ -23,7 +23,13 @@ export default function RootLayout() {
       <StatusBar style={currentTheme === 'dark' ? 'light' : 'dark'} />
 
       {/* App navigation */}
-      <Stack screenOptions={{ headerShown: false }} />
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="index" />
+        <Stack.Screen name="(auth)" />
+        <Stack.Screen name="onboarding" />
+        <Stack.Screen name="dashboard" />
+        <Stack.Screen name="company-dashboard" />
+      </Stack>
 
       {/* Portal (modals, sheets, etc.) */}
       <PortalHost />

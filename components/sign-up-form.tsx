@@ -77,6 +77,14 @@ export function SignUpForm() {
               </Pressable>
             </Link>
           </Text>
+          <Text className="text-center text-sm text-muted-foreground">
+            Registering a company?{' '}
+            <Link href="/company-sign-up" asChild>
+              <Pressable>
+                <Text className="text-sm text-primary underline underline-offset-4">Sign up as Company</Text>
+              </Pressable>
+            </Link>
+          </Text>
         </CardContent>
       </Card>
     </View>

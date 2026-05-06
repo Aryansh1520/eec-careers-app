@@ -85,6 +85,14 @@ export function SignInForm() {
               </Pressable>
             </Link>
           </Text>
+          <Text className="text-center text-sm text-muted-foreground">
+            Are you a company?{' '}
+            <Link href="/company-login" asChild>
+              <Pressable>
+                <Text className="text-sm text-primary underline underline-offset-4">Sign in as Company</Text>
+              </Pressable>
+            </Link>
+          </Text>
         </CardContent>
       </Card>
     </View>

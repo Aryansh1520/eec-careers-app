@@ -5,7 +5,7 @@ import { Switch } from '@/components/ui/switch';
 import { Text } from '@/components/ui/text';
 import { usePersistentTheme } from '@/lib/theme-store';
 import { useRouter } from 'expo-router';
-import { Pencil } from 'lucide-react-native';
+import { Pencil, Building2 } from 'lucide-react-native';
 import React from 'react';
 import { View } from 'react-native';
 
@@ -34,6 +34,15 @@ export default function ProfileScreen() {
             onCheckedChange={toggleTheme} 
           />
         </View>
+
+        {/* Company Portal */}
+        <Button
+          onPress={() => router.push('/company-dashboard')}
+          className="w-full flex-row gap-2"
+          variant="outline">
+          <Icon as={Building2} size={16} className="text-foreground" />
+          <Text>Company Portal</Text>
+        </Button>
 
         <Button
           onPress={() => router.replace('/login')}

@@ -1,0 +1,316 @@
+PROJECT INSTRUCTIONS — COMPANY PORTAL UI IMPLEMENTATION
+
+IMPORTANT:
+This task is frontend/UI only.
+
+Do NOT implement:
+- backend logic
+- database integration
+- authentication providers
+- API routes
+- server actions
+
+The goal is to build the company-side experience while strictly following the existing candidate-side design system and application structure already present in the project.
+
+The company experience should feel like part of the same platform, not a separate product.
+
+--------------------------------------------------
+CORE REQUIREMENT
+--------------------------------------------------
+
+Study the existing candidate-side implementation carefully before building anything.
+
+The company-side UI must:
+- follow the exact same visual language
+- follow the same spacing system
+- follow the same typography
+- follow the same theme handling
+- follow the same responsive behavior
+- follow the same interaction patterns
+- follow the same dashboard/page structure philosophy
+
+The company portal should visually feel like a parallel version of the candidate portal.
+
+Do NOT redesign the application.
+
+--------------------------------------------------
+LAYOUT REQUIREMENT
+--------------------------------------------------
+
+The company-side experience must have its own isolated layout implementation separate from the candidate-side version.
+
+However:
+the structure, spacing behavior, responsive behavior, transitions, page shell patterns, and overall visual hierarchy should closely mirror the candidate implementation.
+
+The company layout should feel like:
+“same platform, different role.”
+
+Do NOT merge candidate and company layouts into one shared role-based layout.
+
+Keep them separated cleanly.
+
+--------------------------------------------------
+IMPORTANT
+--------------------------------------------------
+
+Do NOT create architecture based on assumptions.
+
+Inspect and follow:
+- existing folder structure
+- existing naming conventions
+- existing patterns
+- existing component usage
+- existing utility usage
+- existing design conventions
+
+If reusable structures already exist:
+reuse them.
+
+If they do not exist:
+create appropriate equivalents that match the current codebase style.
+
+--------------------------------------------------
+GLOBAL DESIGN SYSTEM
+--------------------------------------------------
+
+Strictly follow the existing:
+- global.css
+- color variables
+- typography scale
+- card styling
+- border radius
+- shadows
+- spacing
+- hover states
+- transitions
+- muted colors
+- input styling
+- table styling
+- badges
+- empty states
+- responsive behavior
+
+Do NOT introduce:
+- new design systems
+- unrelated gradients
+- different spacing philosophies
+- inconsistent card styles
+- new visual identities
+
+The company UI must feel fully native to the current platform.
+
+--------------------------------------------------
+THEME SUPPORT
+--------------------------------------------------
+
+Company pages must fully support:
+- light mode
+- dark mode
+
+Use the same theme handling approach already used by candidate pages.
+
+Do NOT implement a separate theme system.
+
+Theme behavior, transitions, colors, and state persistence should behave identically to candidate pages.
+
+--------------------------------------------------
+DUMMY DATA
+--------------------------------------------------
+
+Use dummy/mock data only.
+
+Create and organize mock data inside the existing lib structure and follow the project’s current conventions.
+
+Do NOT hardcode large datasets directly inside page files/components.
+
+Use realistic mock company/job/application data.
+
+--------------------------------------------------
+COMPANY ACCOUNT STATUS SYSTEM
+--------------------------------------------------
+
+Each company has a moderation status:
+
+- pending
+- approved
+- rejected
+- suspended
+
+This status controls UI access behavior.
+
+The moderation system is one of the most important parts of this implementation.
+
+--------------------------------------------------
+STATUS RULES
+--------------------------------------------------
+
+If company status is NOT approved:
+
+Allowed:
+- login
+- view dashboard
+- view jobs
+- edit profile/company information
+- contact support
+
+Blocked:
+- create new jobs
+- edit active jobs
+- receive applications
+- appear in candidate search/discovery
+- advanced analytics functionality
+
+IMPORTANT:
+Do NOT hide entire pages or navigation flows.
+
+Instead:
+show restricted states professionally.
+
+Examples:
+- disabled actions
+- muted forms
+- informational banners
+- restricted analytics cards
+- disabled publish actions
+
+The experience should feel intentionally moderated, not broken.
+
+--------------------------------------------------
+COMPANY PAGES REQUIRED
+--------------------------------------------------
+
+Create these pages:
+
+1. Dashboard
+2. Create New Job
+3. Manage Existing Jobs
+4. Profile
+
+All pages should visually follow the candidate-side dashboard patterns already present in the application.
+
+--------------------------------------------------
+DASHBOARD PAGE
+--------------------------------------------------
+
+Dashboard should include:
+- company status banner
+- stats cards
+- recent applications
+- recent jobs
+- activity overview
+- analytics preview
+
+If restricted:
+show informative restricted states instead of empty broken layouts.
+
+The dashboard should still feel useful even when approval is pending.
+
+--------------------------------------------------
+CREATE JOB PAGE
+--------------------------------------------------
+
+If company is approved:
+show fully interactive job creation UI.
+
+If company is pending/rejected/suspended:
+show restricted version of the page.
+
+The page should still exist.
+
+Use:
+- disabled inputs
+- muted styling
+- approval messaging
+- restricted publish actions
+
+Do NOT remove the page entirely.
+
+--------------------------------------------------
+MANAGE JOBS PAGE
+--------------------------------------------------
+
+Display:
+- all company jobs
+- job statuses
+- application counts
+- posting dates
+- visibility state
+
+Example job statuses:
+- draft
+- published
+- paused
+- closed
+- archived
+
+IMPORTANT:
+Job status is separate from company moderation status.
+
+If company becomes suspended/rejected:
+existing jobs should visually reflect restricted visibility and disabled interactions.
+
+--------------------------------------------------
+PROFILE PAGE
+--------------------------------------------------
+
+Profile page should include:
+- company logo upload UI
+- banner upload UI
+- company information
+- website
+- industry
+- company size
+- location
+- social links
+- theme toggle
+
+Uploads can remain mock UI only.
+
+--------------------------------------------------
+RESPONSIVENESS
+--------------------------------------------------
+
+Everything must properly support:
+- mobile
+- tablet
+- desktop
+- ultrawide
+
+Follow the same responsive behavior patterns already used in the candidate experience.
+
+--------------------------------------------------
+ANIMATIONS
+--------------------------------------------------
+
+Keep animations subtle and aligned with the existing application behavior.
+
+Avoid excessive animation.
+
+Prefer:
+- smooth transitions
+- subtle hover states
+- opacity transitions
+- muted motion
+
+--------------------------------------------------
+FINAL GOAL
+--------------------------------------------------
+
+This UI is being built for client approval before backend implementation.
+
+The application should feel:
+- polished
+- realistic
+- scalable
+- production-ready
+
+The moderation/restriction flows are extremely important visually.
+
+The client should immediately understand:
+- companies can exist before approval
+- moderation affects platform capabilities
+- restricted states are intentionally designed
+- the platform supports scalable operational workflows
+
+Most important:
+the company experience must feel like a natural extension of the already existing candidate platform.
