@@ -77,22 +77,29 @@ export function SignInForm() {
               <Text>Continue</Text>
             </Button>
           </View>
-          <Text className="text-center text-sm">
-            Don&apos;t have an account?{' '}
-            <Link href="/sign-up" asChild>
-              <Pressable>
-                <Text className="text-sm underline underline-offset-4">Sign up</Text>
-              </Pressable>
-            </Link>
-          </Text>
-          <Text className="text-center text-sm text-muted-foreground">
-            Are you a company?{' '}
-            <Link href="/company-login" asChild>
-              <Pressable>
-                <Text className="text-sm text-primary underline underline-offset-4">Sign in as Company</Text>
-              </Pressable>
-            </Link>
-          </Text>
+          <View className="mt-6 items-center gap-3">
+  <View className="flex-row items-center">
+    <Text className="text-sm text-muted-foreground">
+      Don&apos;t have an account?
+    </Text>
+
+    <Link href="/sign-up" asChild>
+      <Pressable className="ml-1 active:opacity-70">
+        <Text className="text-sm font-medium text-foreground">
+          Sign up
+        </Text>
+      </Pressable>
+    </Link>
+  </View>
+
+  <Link href="/role-selection" asChild>
+    <Pressable className="active:opacity-70">
+      <Text className="text-xs tracking-wide text-muted-foreground/80">
+        Switch account type
+      </Text>
+    </Pressable>
+  </Link>
+</View>
         </CardContent>
       </Card>
     </View>

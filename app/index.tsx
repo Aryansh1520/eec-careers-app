@@ -16,8 +16,7 @@ export default function Index() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      console.log("Changed path to login")
-      router.replace('/login');
+      router.replace('/role-selection');
     }, 3000);
 
     return () => clearTimeout(timer);

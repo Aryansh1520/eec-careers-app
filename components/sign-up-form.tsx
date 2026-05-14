@@ -79,9 +79,9 @@ export function SignUpForm() {
           </Text>
           <Text className="text-center text-sm text-muted-foreground">
             Registering a company?{' '}
-            <Link href="/company-sign-up" asChild>
+            <Link href="/role-selection" asChild>
               <Pressable>
-                <Text className="text-sm text-primary underline underline-offset-4">Sign up as Company</Text>
+                <Text className="text-sm text-primary underline underline-offset-4">Choose company path</Text>
               </Pressable>
             </Link>
           </Text>
